@@ -156,7 +156,20 @@ connectDB();
       )
       .catch((err)=>{res.status(500).send(err);});
     });
-
+/////search by name and price
+ app.get('/search/:key',async(req,res)=>{
+      console.log(req.params.key);
+       
+        let data=await products.find({
+          "$or":[
+            {name:{$regex:req.params.key}},
+            {price:{$regex:req.params.key}}
+          ]
+         });
+         res.send(data);
+      
+      
+    });
     
     
 const port = process.env.PORT || 4000;
